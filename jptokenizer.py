@@ -36,8 +36,7 @@ def _lemmatize(sentence):
     while parsed:
         features = parsed.feature.split(',')
         if features[0] != 'BOS/EOS':
-            lemma = features[-3]
-            yield lemma
+            yield features[-3]
         parsed = parsed.next
 
 
