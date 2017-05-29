@@ -22,11 +22,11 @@ sudo apt-get install -y "${python}" "${python}-venv" "${python}-dev"
 rootdir="${rootdir}/${github_account}-${github_repo}"
 repo="${rootdir}/src"
 venv="${rootdir}/env"
+"${python}" -m venv "${venv}"
 pip="${venv}/bin/pip"
 python="${venv}/bin/python"
 mkdir -p "${rootdir}"
 git clone --depth 1 "https://github.com/${github_account}/${github_repo}.git" "${repo}"
-"${python}" -m venv "${venv}"
 "${pip}" install -U pip wheel
 "${pip}" install -r "${repo}/requirements.txt"
 
