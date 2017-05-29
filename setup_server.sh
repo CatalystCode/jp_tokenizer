@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 sudo apt-get install -y python3.5 python3-pip python3.5-dev build-essential
+pip3 install --upgrade pip wheel
 
 sudo apt-get install -y mecab mecab-ipadic libmecab-dev mecab-ipadic-utf8
 sudo apt-get install -y git
