@@ -33,17 +33,11 @@ def _tokenize(sentence):
 
 def _lemmatize(sentence):
     node = _tagger.parseToNode(sentence)
-    text_data_parsed_lemmatized = ''
     while node:
         node_list = node.feature.split(',')
-        if node_list[0] == 'BOS/EOS':
-            node = node.next
-            continue
-        else:
-            text_data_parsed_lemmatized += node_list[-7]
-            text_data_parsed_lemmatized += ' '
-            node = node.next
-    return text_data_parsed_lemmatized
+        if node_list[0] != 'BOS/EOS':
+            yield node_list[-7]
+        node = node.next
 
 
 if __name__ == '__main__':
