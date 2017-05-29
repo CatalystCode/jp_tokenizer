@@ -37,17 +37,17 @@ sudo chown "$runas:$runas" '/etc/authbind/byport/80'
 sudo chmod 755 '/etc/authbind/byport/80'
 
 # auto-start service
-daemon="$(basename ${rootdir})"
+progname="$(basename ${rootdir})"
 sudo apt-get install -y supervisor
 sudo service supervisor start
-sudo tee "/etc/supervisor/conf.d/${daemon}.conf" << EOF
-[program:${daemon}]
+sudo tee "/etc/supervisor/conf.d/${progname}.conf" << EOF
+[program:${progname}]
 command=/usr/bin/authbind '${python}' '${repo}/${runcmd}'
 autostart=true
 autorestart=true
 startretries=3
-stderr_logfile=/var/log/${daemon}.err.log
-stdout_logfile=/var/log/${daemon}.out.log
+stderr_logfile=/var/log/${progname}.err.log
+stdout_logfile=/var/log/${progname}.out.log
 user=$runas
 environment=
 EOF
