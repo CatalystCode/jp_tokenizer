@@ -16,7 +16,7 @@ First, we need to set up the service:
   sudo ./setup_server.sh
 
   # run the api on port 80
-  sudo ./run_server.py
+  authbind python3 ./run_server.py
 
 Now, we can call the API:
 

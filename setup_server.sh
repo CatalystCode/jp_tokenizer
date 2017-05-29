@@ -11,3 +11,8 @@ git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
 
 git clone --depth 1 https://github.com/CatalystCode/jp_tokenizer.git
 (cd jp_tokenizer; pip3 install -r requirements.txt)
+
+sudo apt-get install -y authbind
+sudo touch /etc/authbind/byport/80
+sudo chown $USER:$USER /etc/authbind/byport/80
+sudo chmod 755 /etc/authbind/byport/80

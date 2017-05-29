@@ -1,9 +1,11 @@
-#!/usr/bin/env python3
-# coding: utf-8
+from os import chdir
+from tempfile import gettempdir
 
 from MeCab import Tagger
 from sanic import Sanic 
 from sanic.response import text
+
+chdir(gettempdir())
  
 tagger = Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
 app = Sanic(__name__) 
