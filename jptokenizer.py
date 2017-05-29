@@ -12,7 +12,7 @@ app = Sanic(__name__)
 @app.route('/tokenize/', methods=['POST'])
 async def tokenize(request):
     sentence = request.body.decode('utf-8')
-    tokens = _tokenizer(sentence)
+    tokens = _tokenize(sentence)
     return text(' '.join(tokens))
 
 
@@ -23,7 +23,7 @@ async def lemmatize(request):
     return text(' '.join(lemmas))
 
 
-def _tokenizer(sentence):
+def _tokenize(sentence):
     parsed = _tagger.parseToNode(sentence)
     while parsed:
         token = parsed.surface
