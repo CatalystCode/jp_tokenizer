@@ -42,9 +42,11 @@ def _lemmatize(sentence):
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
+    from multiprocessing import cpu_count
+
     parser = ArgumentParser()
     parser.add_argument('-h', '--host', default='0.0.0.0')
     parser.add_argument('-p', '--port', type=int, default=80)
     args = parser.parse_args()
 
-    app.run(host=args.host, port=args.port)
+    app.run(host=args.host, port=args.port, workers=cpu_count())
