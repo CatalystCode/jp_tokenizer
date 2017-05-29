@@ -1,3 +1,4 @@
+from functools import lru_cache
 from os import chdir
 from tempfile import gettempdir
 
@@ -6,8 +7,6 @@ from sanic import Sanic
 from sanic.response import text
 
 chdir(gettempdir())
- 
-tagger = Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
 app = Sanic(__name__) 
  
 
@@ -25,8 +24,13 @@ async def lemmatize(request):
     return text(' '.join(lemmas))
 
 
+@lru_cache(maxsize=1)
+def _get_tagger():
+    return Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
+
+
 def _tokenize(sentence):
-    parsed = tagger.parseToNode(sentence)
+    parsed = _get_tagger().parseToNode(sentence)
     while parsed:
         token = parsed.surface
         yield token
@@ -34,7 +38,7 @@ def _tokenize(sentence):
 
 
 def _lemmatize(sentence):
-    parsed = tagger.parseToNode(sentence)
+    parsed = _get_tagger().parseToNode(sentence)
     while parsed:
         features = parsed.feature.split(',')
         if features[0] != 'BOS/EOS':
