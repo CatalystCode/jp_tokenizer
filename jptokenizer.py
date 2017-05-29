@@ -42,4 +42,10 @@ def _lemmatize(sentence):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('-h', '--host', default='0.0.0.0')
+    parser.add_argument('-p', '--port', type=int, default=80)
+    args = parser.parse_args()
+
+    app.run(host=args.host, port=args.port)
