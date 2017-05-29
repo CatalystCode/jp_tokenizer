@@ -10,13 +10,13 @@ rootdir="$PWD"
 python='python3.5'
 
 # install mecab tokenizer
-sudo apt-get install -y mecab mecab-ipadic libmecab-dev mecab-ipadic-utf8
+sudo apt-get install -y build-essential mecab mecab-ipadic libmecab-dev mecab-ipadic-utf8
 sudo apt-get install -y git
 git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
 (cd mecab-ipadic-neologd; sudo ./bin/install-mecab-ipadic-neologd -n -y)
 
 # install python
-sudo apt-get install -y "${python}" "${python}-venv" "${python}-dev" build-essential
+sudo apt-get install -y "${python}" "${python}-venv" "${python}-dev"
 
 # install service
 rootdir="${rootdir}/${github_account}-${github_repo}"
