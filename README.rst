@@ -8,6 +8,8 @@ The service is implemented by wrapping the `MeCab <http://taku910.github.io/meca
 Usage
 `````
 
+Ensure that your server has at least 2-3GB of available RAM (e.g. `Azure Standard DS1_v2 <https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general#dsv2-series>`_) and then run:
+
 .. sourcecode :: sh
 
   # install all dependencies on the machine and start the service
