@@ -23,6 +23,7 @@ def _tokenizer(sentence):
         yield token
         parsed = parsed.next
 
+
 def _parse_to_lemmatized_whitespaced(sentence):
     node = _tagger.parseToNode(sentence)
     text_data_parsed_lemmatized = ""
@@ -36,6 +37,7 @@ def _parse_to_lemmatized_whitespaced(sentence):
             text_data_parsed_lemmatized += " "
             node = node.next
     return text_data_parsed_lemmatized
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
