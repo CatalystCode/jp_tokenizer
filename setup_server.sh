@@ -20,14 +20,14 @@ sudo apt-get install -y "${python}" "${python}-venv" "${python}-dev" build-essen
 
 # install service
 rootdir="${rootdir}/${github_account}-${github_repo}"
-mkdir -p "${rootdir}"
-venv="${rootdir}/env"
 repo="${rootdir}/src"
-"${python}" -m venv "${venv}"
+venv="${rootdir}/env"
 pip="${venv}/bin/pip"
 python="${venv}/bin/python"
-"${pip}" install -U pip wheel
+mkdir -p "${rootdir}"
 git clone --depth 1 "https://github.com/${github_account}/${github_repo}.git" "${repo}"
+"${python}" -m venv "${venv}"
+"${pip}" install -U pip wheel
 "${pip}" install -r "${repo}/requirements.txt"
 
 # allow service to run on port 80
