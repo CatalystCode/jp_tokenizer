@@ -34,11 +34,11 @@ def _tokenize(sentence):
 def _lemmatize(sentence):
     parsed = _tagger.parseToNode(sentence)
     while parsed:
-        features = node.feature.split(',')
+        features = parsed.feature.split(',')
         if features[0] != 'BOS/EOS':
-            lemma = features[-7]
+            lemma = features[-3]
             yield lemma
-        node = node.next
+        parsed = parsed.next
 
 
 if __name__ == '__main__':
