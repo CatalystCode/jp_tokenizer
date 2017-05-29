@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-sudo apt-get install -y python3 python3-pip
+sudo add-apt-repository ppa:jonathonf/python-3.6
+sudo apt-get update
+sudo apt-get install python3.6 python3-pip
+
 sudo apt-get install -y mecab mecab-ipadic libmecab-dev mecab-ipadic-utf8
 sudo apt-get install -y git
 
