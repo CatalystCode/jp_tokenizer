@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # install python
-sudo apt-get install -y python3.5 python3-pip python3.5-dev build-essential
-pip3 install --upgrade pip wheel
+sudo apt-get install -y python3.5 python3.5-venv python3.5-dev build-essential
 
 # install mecab tokenizer
 sudo apt-get install -y mecab mecab-ipadic libmecab-dev mecab-ipadic-utf8
@@ -11,8 +10,10 @@ git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
 (cd mecab-ipadic-neologd; sudo ./bin/install-mecab-ipadic-neologd -n -y)
 
 # install service
+python3.5 -m venv jp_tokenizer-env
+jp_tokenizer-env/bin/pip install -U pip wheel
 git clone --depth 1 https://github.com/CatalystCode/jp_tokenizer.git
-(cd jp_tokenizer; pip3 install -r requirements.txt)
+jp_tokenizer-env/bin/pip install -r jp_tokenizer/requirements.txt
 
 # enable service to run on port 80
 sudo apt-get install -y authbind
@@ -25,7 +26,7 @@ sudo apt-get install -y supervisor
 sudo service supervisor start
 sudo tee /etc/supervisor/conf.d/jp_tokenizer.conf << EOF
 [program:jp_tokenizer]
-command=/usr/bin/authbind /usr/bin/python3 $(readlink -f jp_tokenizer/run_server.py)
+command=/usr/bin/authbind $PWD/jp_tokenizer-env/bin/python $PWD/jp_tokenizer/run_server.py
 directory=/tmp
 autostart=true
 autorestart=true
