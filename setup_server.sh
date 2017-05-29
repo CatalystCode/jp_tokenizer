@@ -16,3 +16,20 @@ sudo apt-get install -y authbind
 sudo touch /etc/authbind/byport/80
 sudo chown $USER:$USER /etc/authbind/byport/80
 sudo chmod 755 /etc/authbind/byport/80
+
+sudo apt-get install -y supervisor
+sudo service supervisor start
+sudo tee /etc/supervisor/conf.d/jp_tokenizer.conf << EOF
+[program:jp_tokenizer]
+command=/usr/bin/authbind /usr/bin/python3 $(readlink -f jp_tokenizer/run_server.py)
+directory=/tmp
+autostart=true
+autorestart=true
+startretries=3
+stderr_logfile=/var/log/jp_tokenizer.err.log
+stdout_logfile=/var/log/jp_tokenizer.out.log
+user=$USER
+environment=
+EOF
+sudo supervisorctl reread
+sudo supervisorctl update
