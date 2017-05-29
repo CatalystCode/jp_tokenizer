@@ -2,7 +2,7 @@
 
 from MeCab import Tagger
 from sanic import Sanic 
-from sanic.response import json
+from sanic.response import text
  
 _tagger = Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
 
@@ -12,8 +12,8 @@ app = Sanic(__name__)
 @app.route('/tokenize/', methods=['POST'])
 async def tokenize(request):
     sentence = request.body.decode('utf-8')
-    results = list(_tokenizer(sentence))
-    return json({'tokens': results})
+    tokens = _tokenizer(sentence)
+    return text(' '.join(tokens))
 
 
 def _tokenizer(sentence):
