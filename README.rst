@@ -8,20 +8,12 @@ The service is implemented by wrapping the `MeCab <http://taku910.github.io/meca
 Usage
 `````
 
-First, we need to set up the service:
-
 .. sourcecode :: sh
 
-  # install all dependencies on the machine
-  sudo ./setup_server.sh
+  # install all dependencies on the machine and start the service
+  curl 'https://raw.githubusercontent.com/CatalystCode/jp_tokenizer/master/setup_server.sh' | bash
 
-  # run the api on port 80
-  authbind python3 ./run_server.py
-
-Now, we can call the API:
-
-.. sourcecode :: sh
-
+  # call the API
   curl -X POST 'http://localhost/tokenize' --data 'サザエさんは走った'
   curl -X POST 'http://localhost/lemmatize' --data 'サザエさんは走った'
 
