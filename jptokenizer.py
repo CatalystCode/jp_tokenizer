@@ -16,6 +16,13 @@ async def tokenize(request):
     return text(' '.join(tokens))
 
 
+@app.route('/lemmatize/', methods=['POST'])
+async def lemmatize(request):
+    sentence = request.body.decode('utf-8')
+    lemmas = _lemmatize(sentence)
+    return text(' '.join(lemmas))
+
+
 def _tokenizer(sentence):
     parsed = _tagger.parseToNode(sentence)
     while parsed:
@@ -24,7 +31,7 @@ def _tokenizer(sentence):
         parsed = parsed.next
 
 
-def _parse_to_lemmatized_whitespaced(sentence):
+def _lemmatize(sentence):
     node = _tagger.parseToNode(sentence)
     text_data_parsed_lemmatized = ''
     while node:
