@@ -10,4 +10,5 @@ sudo apt-get install -y git
 git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
 (cd mecab-ipadic-neologd; sudo ./bin/install-mecab-ipadic-neologd -n -y)
 
-pip3 install -r requirements.txt
+git clone --depth 1 https://github.com/CatalystCode/jp_tokenizer.git
+(cd jp_tokenizer; pip3 install -r requirements.txt)
