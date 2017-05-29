@@ -5,8 +5,7 @@ from MeCab import Tagger
 from sanic import Sanic 
 from sanic.response import text
  
-_tagger = Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
-
+tagger = Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
 app = Sanic(__name__) 
  
 
@@ -25,7 +24,7 @@ async def lemmatize(request):
 
 
 def _tokenize(sentence):
-    parsed = _tagger.parseToNode(sentence)
+    parsed = tagger.parseToNode(sentence)
     while parsed:
         token = parsed.surface
         yield token
@@ -33,7 +32,7 @@ def _tokenize(sentence):
 
 
 def _lemmatize(sentence):
-    parsed = _tagger.parseToNode(sentence)
+    parsed = tagger.parseToNode(sentence)
     while parsed:
         features = parsed.feature.split(',')
         if features[0] != 'BOS/EOS':
