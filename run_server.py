@@ -1,3 +1,6 @@
+"""A simple webservice to tokenize and lemmatize Japanese text.
+
+"""
 from functools import lru_cache
 from os import chdir
 from tempfile import gettempdir
@@ -50,7 +53,7 @@ if __name__ == '__main__':
     from argparse import ArgumentParser
     from multiprocessing import cpu_count
 
-    parser = ArgumentParser()
+    parser = ArgumentParser(description=__doc__)
     parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=80)
     args = parser.parse_args()
