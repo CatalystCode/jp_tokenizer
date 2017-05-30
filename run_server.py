@@ -6,12 +6,12 @@ from os import chdir
 from tempfile import gettempdir
 
 from MeCab import Tagger
-from sanic import Sanic 
+from sanic import Sanic
 from sanic.response import text
 
 chdir(gettempdir())
-app = Sanic(__name__) 
- 
+app = Sanic(__name__)
+
 
 @app.route('/tokenize/', methods=['POST'])
 async def tokenize(request):
