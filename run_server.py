@@ -5,8 +5,12 @@ from functools import lru_cache
 from os import chdir
 from os import getenv
 from tempfile import gettempdir
+from typing import Iterable
+from typing import Text
 
 from MeCab import Tagger
+from sanic import Request
+from sanic import Response
 from sanic import Sanic
 from sanic.response import text
 
@@ -15,26 +19,26 @@ app = Sanic(__name__)
 
 
 @app.route('/tokenize/', methods=['POST'])
-async def tokenize(request):
+async def tokenize(request: Request) -> Response:
     sentence = request.body.decode('utf-8')
     tokens = _tokenize(sentence)
     return text(' '.join(tokens))
 
 
 @app.route('/lemmatize/', methods=['POST'])
-async def lemmatize(request):
+async def lemmatize(request: Request) -> Response:
     sentence = request.body.decode('utf-8')
     lemmas = _lemmatize(sentence)
     return text(' '.join(lemmas))
 
 
 @lru_cache(maxsize=1)
-def _get_tagger():
+def _get_tagger() -> Tagger:
     opts = getenv('MECAB_OPTS', '-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
     return Tagger(opts)
 
 
-def _tokenize(sentence):
+def _tokenize(sentence: Text) -> Iterable[Text]:
     parsed = _get_tagger().parseToNode(sentence)
     while parsed:
         token = parsed.surface
@@ -42,7 +46,7 @@ def _tokenize(sentence):
         parsed = parsed.next
 
 
-def _lemmatize(sentence):
+def _lemmatize(sentence: Text) -> Iterable[Text]:
     parsed = _get_tagger().parseToNode(sentence)
     while parsed:
         features = parsed.feature.split(',')
