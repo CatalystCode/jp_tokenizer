@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/CatalystCode/jp_tokenizer.svg?branch=master
+  :target: https://travis-ci.org/CatalystCode/jp_tokenizer
+
 jp_tokenizer
 ============
 
