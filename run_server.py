@@ -10,9 +10,9 @@ from typing import Iterable
 from typing import Text
 
 from MeCab import Tagger
-from sanic import Request
-from sanic import Response
 from sanic import Sanic
+from sanic.request import Request
+from sanic.response import HTTPResponse
 from sanic.response import text
 
 chdir(gettempdir())
@@ -20,14 +20,14 @@ app = Sanic(__name__)
 
 
 @app.route('/tokenize/', methods=['POST'])
-async def tokenize(request: Request) -> Response:
+async def tokenize(request: Request) -> HTTPResponse:
     sentence = request.body.decode('utf-8')
     tokens = _tokenize(sentence)
     return text(' '.join(tokens))
 
 
 @app.route('/lemmatize/', methods=['POST'])
-async def lemmatize(request: Request) -> Response:
+async def lemmatize(request: Request) -> HTTPResponse:
     sentence = request.body.decode('utf-8')
     lemmas = _lemmatize(sentence)
     return text(' '.join(lemmas))
