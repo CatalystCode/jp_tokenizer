@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """A simple webservice to tokenize and lemmatize Japanese text.
 
 """
@@ -35,7 +36,13 @@ async def lemmatize(request: Request) -> Response:
 @lru_cache(maxsize=1)
 def _get_tagger() -> Tagger:
     opts = getenv('MECAB_OPTS', '-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
-    return Tagger(opts)
+    tagger = Tagger(opts)
+    # for some reason the first request to the tagger doesn't produce output
+    # so pre-warming it here once to avoid serving daft results later
+    parsed = tagger.parseToNode('サザエさんは走った')
+    while parsed:
+        parsed = parsed.next
+    return tagger
 
 
 def _tokenize(sentence: Text) -> Iterable[Text]:
