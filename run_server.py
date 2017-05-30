@@ -3,6 +3,7 @@
 """
 from functools import lru_cache
 from os import chdir
+from os import getenv
 from tempfile import gettempdir
 
 from MeCab import Tagger
@@ -29,7 +30,8 @@ async def lemmatize(request):
 
 @lru_cache(maxsize=1)
 def _get_tagger():
-    return Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
+    opts = getenv('MECAB_OPTS', '-d /usr/lib/mecab/dic/mecab-ipadic-neologd/')
+    return Tagger(opts)
 
 
 def _tokenize(sentence):
