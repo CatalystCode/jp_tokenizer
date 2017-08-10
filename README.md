@@ -1,6 +1,7 @@
 [![CI status](https://travis-ci.org/CatalystCode/jp_tokenizer.svg?branch=master)](https://travis-ci.org/CatalystCode/jp_tokenizer)
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
 [![Docker status](https://img.shields.io/docker/pulls/cwolff/jp_tokenizer.svg)](https://hub.docker.com/r/cwolff/jp_tokenizer/)
+
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
 
 # jp_tokenizer #
 
