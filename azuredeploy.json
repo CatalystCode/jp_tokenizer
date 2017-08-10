@@ -14,7 +14,7 @@
             ]
         },
         "site_name": {
-            "defaultValue": "jp_tokenizer",
+            "defaultValue": "jptokenizer",
             "type": "String"
         },
         "appserviceplan_size": {
@@ -27,7 +27,7 @@
             ]
         },
         "appserviceplan_name": {
-            "defaultValue": "jp_tokenizer-appservice-plan",
+            "defaultValue": "jptokenizer-appservice-plan",
             "type": "String"
         }
     },
