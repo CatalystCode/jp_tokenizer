@@ -16,10 +16,10 @@ Ensure that your server has at least 2-3GB of available RAM (e.g. `Azure Standar
 .. sourcecode :: sh
 
   # install all dependencies on the machine and start the service
-  curl 'https://raw.githubusercontent.com/CatalystCode/jp_tokenizer/master/setup_server.sh' | bash
+  docker run -p 8080:80 cwolff/jp_tokenizer
 
   # call the API
-  curl -X POST 'http://localhost/tokenize' --data 'サザエさんは走った'
-  curl -X POST 'http://localhost/lemmatize' --data 'サザエさんは走った'
+  curl -X POST 'http://localhost:8080/tokenize' --data 'サザエさんは走った'
+  curl -X POST 'http://localhost:8080/lemmatize' --data 'サザエさんは走った'
 
 The API will respond with a space-delimited string of tokens/lemmas.
