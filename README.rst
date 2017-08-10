@@ -1,6 +1,9 @@
 .. image:: https://travis-ci.org/CatalystCode/jp_tokenizer.svg?branch=master
   :target: https://travis-ci.org/CatalystCode/jp_tokenizer
 
+.. image:: https://azuredeploy.net/deploybutton.svg
+  :target: https://azuredeploy.net/
+
 .. image:: https://img.shields.io/docker/pulls/cwolff/jp_tokenizer.svg
   :target: https://hub.docker.com/r/cwolff/jp_tokenizer/
 
