@@ -7,7 +7,7 @@
 
 This repository contains a tiny web service that lets you tokenize and lemmatize Japanese text.
 
-The service is implemented by wrapping the [MeCab](http://taku910.github.io/mecab/) tokenizer in a [Sani](https://github.com/channelcat/sanic/) app.
+The service is implemented by wrapping the [MeCab](http://taku910.github.io/mecab/) tokenizer in a [Sanic](https://github.com/channelcat/sanic/) app.
 
 ## Usage ##
 
