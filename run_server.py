@@ -7,6 +7,7 @@ from os import chdir
 from os import getenv
 from tempfile import gettempdir
 from typing import Iterable
+from typing import Callable
 from typing import Text
 
 from MeCab import Tagger
@@ -16,36 +17,42 @@ from sanic.response import HTTPResponse
 from sanic.response import json
 from sanic.response import text
 
+NLPFunc = Callable[[Text], Iterable[Text]]
+
 chdir(gettempdir())
 app = Sanic(__name__)
 
 
 @app.route('/tokenize/', methods=['POST'])
 async def tokenize(request: Request) -> HTTPResponse:
-    sentence = request.body.decode('utf-8')
-    tokens = _tokenize(sentence)
-    return text(' '.join(tokens))
+    return _process_single(request, _tokenize)
 
 
 @app.route('/batch/tokenize/', methods=['POST'])
 async def tokenize_batch(request: Request) -> HTTPResponse:
-    sentences = (_['jp'] for _ in request.json['sentences'])
-    tokenized = [{'jp': _, 'tokens': _tokenize(_)} for _ in sentences]
-    return json({'sentences': tokenized})
+    return _process_batch(request, _tokenize, 'tokens')
 
 
 @app.route('/lemmatize/', methods=['POST'])
 async def lemmatize(request: Request) -> HTTPResponse:
-    sentence = request.body.decode('utf-8')
-    lemmas = _lemmatize(sentence)
-    return text(' '.join(lemmas))
+    return _process_single(request, _lemmatize)
 
 
 @app.route('/batch/lemmatize/', methods=['POST'])
 async def lemmatize_batch(request: Request) -> HTTPResponse:
+    return _process_batch(request, _lemmatize, 'lemmas')
+
+
+def _process_single(request: Request, nlpfunc: NLPFunc):
+    sentence = request.body.decode('utf-8')
+    tokens = nlpfunc(sentence)
+    return text(' '.join(tokens))
+
+
+def _process_batch(request: Request, nlpfunc: NLPFunc, tokens_key: Text):
     sentences = (_['jp'] for _ in request.json['sentences'])
-    lemmatized = [{'jp': _, 'tokens': _lemmatize(_)} for _ in sentences]
-    return json({'sentences': lemmatized})
+    tokens = [{'jp': _, tokens_key: list(nlpfunc(_))} for _ in sentences]
+    return json({'sentences': tokens})
 
 
 @lru_cache(maxsize=1)
