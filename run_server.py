@@ -13,6 +13,7 @@ from MeCab import Tagger
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import HTTPResponse
+from sanic.response import json
 from sanic.response import text
 
 chdir(gettempdir())
@@ -26,11 +27,25 @@ async def tokenize(request: Request) -> HTTPResponse:
     return text(' '.join(tokens))
 
 
+@app.route('/batch/tokenize/', methods=['POST'])
+async def tokenize_batch(request: Request) -> HTTPResponse:
+    sentences = (_['jp'] for _ in request.json['sentences'])
+    tokenized = [{'jp': _, 'tokens': _tokenize(_)} for _ in sentences]
+    return json({'sentences': tokenized})
+
+
 @app.route('/lemmatize/', methods=['POST'])
 async def lemmatize(request: Request) -> HTTPResponse:
     sentence = request.body.decode('utf-8')
     lemmas = _lemmatize(sentence)
     return text(' '.join(lemmas))
+
+
+@app.route('/batch/lemmatize/', methods=['POST'])
+async def lemmatize_batch(request: Request) -> HTTPResponse:
+    sentences = (_['jp'] for _ in request.json['sentences'])
+    lemmatized = [{'jp': _, 'tokens': _lemmatize(_)} for _ in sentences]
+    return json({'sentences': lemmatized})
 
 
 @lru_cache(maxsize=1)
