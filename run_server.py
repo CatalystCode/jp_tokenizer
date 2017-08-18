@@ -67,8 +67,9 @@ def _get_tagger() -> Tagger:
 def _tokenize(sentence: Text) -> Iterable[Text]:
     parsed = _get_tagger().parseToNode(sentence)
     while parsed:
-        token = parsed.surface
-        yield token
+        token = parsed.surface.strip()
+        if token:
+            yield token
         parsed = parsed.next
 
 
