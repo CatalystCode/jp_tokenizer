@@ -3,9 +3,7 @@
 
 """
 from functools import lru_cache
-from os import chdir
 from os import getenv
-from tempfile import gettempdir
 from typing import Iterable
 from typing import Callable
 from typing import Text
@@ -19,7 +17,6 @@ from sanic.response import text
 
 NLPFunc = Callable[[Text], Iterable[Text]]
 
-chdir(gettempdir())
 app = Sanic(__name__)
 
 
@@ -87,10 +84,13 @@ def _lemmatize(sentence: Text) -> Iterable[Text]:
 if __name__ == '__main__':
     from argparse import ArgumentParser
     from multiprocessing import cpu_count
+    from os import chdir
+    from tempfile import gettempdir
 
     parser = ArgumentParser(description=__doc__)
     parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=80)
     args = parser.parse_args()
 
+    chdir(gettempdir())
     app.run(host=args.host, port=args.port, workers=cpu_count())
