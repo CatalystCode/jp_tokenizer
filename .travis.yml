@@ -1,14 +1,24 @@
+sudo:
+  required
+
 language:
   python
 
+services:
+  docker
+
 python:
-  - "3.5"
   - "3.6"
+
+before_install:
+  - docker build -t cwolff/jp_tokenizer .
+  - docker run -p 8080:80 cwolff/jp_tokenizer &
 
 install:
   - pip install flake8
   - pip install mypy
 
 script:
-  - flake8 *.py
-  - mypy --ignore-missing-imports *.py
+  - flake8 run_server.py
+  - mypy --ignore-missing-imports run_server.py
+  - python run_tests.py http://localhost:8080
