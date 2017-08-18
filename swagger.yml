@@ -1,0 +1,135 @@
+swagger: "2.0"
+
+info:
+  title: A service for tokenizing and lemmatizing Japanese text.
+  version: "0.1"
+
+paths:
+
+  /tokenize:
+    post:
+      summary: Tokenizes a single Japanese string.
+      consumes:
+        - text/plain
+      parameters:
+        - in: body
+          name: text
+          required: true
+          description: The Japanese text to tokenize (e.g., 'サザエさんは走った')
+          schema:
+            type: string
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: Sentence was succesfully tokenized.
+          schema:
+            type: string
+            description: A white-space delimited string of tokens in the sentence (e.g., 'サザエさん は 走っ た')
+
+  /lemmatize:
+    post:
+      summary: Lemmatizes a single Japanese string.
+      consumes:
+        - text/plain
+      parameters:
+        - in: body
+          name: text
+          required: true
+          description: The Japanese text to lemmatize.
+          schema:
+            type: string
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: Sentence was succesfully lemmatized.
+          schema:
+            type: string
+            description: A white-space delimited string of lemmas in the sentence.
+
+  /batch/tokenize:
+    post:
+      summary: Tokenizes a multiple Japanese string.
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: sentences
+          required: true
+          description: The Japanese texts to tokenize.
+          schema:
+            type: object
+            properties:
+              sentences:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    jp:
+                      description: A Japanese text to tokenize.
+                      type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The sentences were succesfully tokenized.
+          schema:
+            type: object
+            properties:
+              sentences:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    jp:
+                      description: The Japanese text that was tokenized.
+                      type: string
+                    tokens:
+                      description: The tokens for the text.
+                      type: array
+                      items:
+                        type: string
+
+  /batch/lemmatize:
+    post:
+      summary: Lemmatizes a multiple Japanese string.
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: sentences
+          required: true
+          description: The Japanese texts to lemmatize.
+          schema:
+            type: object
+            properties:
+              sentences:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    jp:
+                      description: A Japanese text to lemmatize.
+                      type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The sentences were succesfully lemmatized.
+          schema:
+            type: object
+            properties:
+              sentences:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    jp:
+                      description: The Japanese text that was lemmatized.
+                      type: string
+                    lemmas:
+                      description: The lemmas for the text.
+                      type: array
+                      items:
+                        type: string
