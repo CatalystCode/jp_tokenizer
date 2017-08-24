@@ -77,6 +77,17 @@ def _tokenize(sentence: Text) -> Iterable[Text]:
 def _lemmatize(sentence: Text) -> Iterable[Text]:
     parsed = _get_tagger().parseToNode(sentence)
     while parsed:
+        # The format of parsed.features is:
+        #
+        # Original Form\tPart of Speech,
+        # Part of Speech section 1,
+        # Part of Speech section 2,
+        # Part of Speech section 3,
+        # Conjugated form,
+        # Inflection,
+        # Reading,
+        # Pronounciation
+        #
         features = parsed.feature.split(',')
         if features[0] != 'BOS/EOS':
             yield features[-3]
