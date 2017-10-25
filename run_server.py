@@ -15,10 +15,12 @@ from sanic.request import Request
 from sanic.response import HTTPResponse
 from sanic.response import json
 from sanic.response import text
+from sanic_cors import CORS
 
 NLPFunc = Callable[[Text], Iterable[Text]]
 
 app = Sanic(__name__)
+CORS(app)
 
 
 @app.route('/tokenize/', methods=['POST'])
